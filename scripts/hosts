@@ -1,0 +1,4 @@
+[all]
+server1	ansible_user=root
+[repo]
+server1	ansible_user=root
