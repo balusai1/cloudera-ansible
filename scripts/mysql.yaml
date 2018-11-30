@@ -1,12 +1,12 @@
-- hosts: all
+- hosts: mysql
   user: root
   sudo: true
   tasks:
-    - name: Install Mariadb
+    - name: Install MariaDB
       yum:
           name: mariadb-server
           state: latest
-    - name: start mariadb
+    - name: start MariaDB
       service:
          name: mariadb
          state: started
@@ -14,31 +14,27 @@
       yum:
           name: epel-release
           state: present
-    - name: Install pip
-      yum:
-          name: python-pip
-          state: present
-    - name: Install pip
+    - name: Install MySQL-python
       yum:
           name: MySQL-python
           state: present
-    - name: Set root Password
+    - name: Set root Password for MySQL data base and limit the access to localhost
       mysql_user: login_password={{ 'mysql_root_password' }} check_implicit_admin=yes name=root host={{ item }} password={{ 'mysql_root_password' }} state=present 
       with_items:
         - localhost
         - 127.0.0.1
         - ::1
-    - name: Remove anonymous users
+    - name: Remove anonymous users in MySQL
       command: 'mysql -pmysql_root_password -ne  "{{ item }}"'
       with_items:
         - DELETE FROM mysql.user WHERE User=''
       changed_when: False
-    - name: Reload privilege tables
+    - name: Reload privilege tables of MySQL DB
       command: 'mysql -pmysql_root_password -ne "{{ item }}"'
       with_items:
         - FLUSH PRIVILEGES
       changed_when: False
-    - name: Disallow root login remotely
+    - name: Disallow MySQL root login remotely
       command: 'mysql -pmysql_root_password -ne "{{ item }}"'
       with_items:
         - DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1')
@@ -50,12 +46,12 @@
         - DROP DATABASE IF EXISTS test
         - DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%'
       changed_when: False
-    - name: Reload privilege tables
+    - name: Reload All privilege tables
       command: 'mysql -pmysql_root_password -ne "{{ item }}"'
       with_items:
         - FLUSH PRIVILEGES
       changed_when: False
-    - name: creating DB and tables
+    - name: Creating nesesary databases and tables for cloudera
       mysql_db:
           state: import
           name: all
