@@ -1,4 +1,7 @@
 [all]
-server1	ansible_user=root
+server1	ansible_user=admin
+server2 ansible_user=admin
 [repo]
-server1	ansible_user=root
+server1	ansible_user=admin
+[mysql]
+server1	ansible_user=admin
