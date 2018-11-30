@@ -1,0 +1,13 @@
+ - hosts: all
+   user: root
+   sudo: true
+   tasks:
+    - name: Stop mariadb
+      action: service name=mariadb state=stopped
+    - name: Remove mariadb
+      yum:
+       name: mariadb
+       state: absent
+    - file:
+         state: absent
+         path: /var/lib/mysql

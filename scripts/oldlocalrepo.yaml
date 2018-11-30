@@ -1,0 +1,26 @@
+- hosts: repo
+  user: root
+  tasks:
+     - name: Install HTTPD service
+       yum:
+          name: httpd
+          state: installed
+     - name: Downloading ropo file
+       yum_repository:
+         name: cloudera-cdh
+         description: Cloudera cdh 5 YUM repo
+         baseurl: https://archive.cloudera.com/cdh5/redhat/7/x86_64/cdh/5.15.1
+     - name: Downloading ropo file
+       yum_repository:
+         name: cloudera-manager
+         description: Cloudera manager YUM repo
+         baseurl: http://archive.cloudera.com/cm5/redhat/7/x86_64/cm/5.15.1/
+         gpgkey: http://archive.cloudera.com/cm5/redhat/7/x86_64/cm/RPM-GPG-KEY-cloudera
+         gpgcheck: yes
+         async: yes
+     - name: creating cdh repo location
+       file: path=/var/www/yum/cdh5/redhat/7/x86_64/cdh/5.15.1 state=directory
+     - name: Downloading cdh repo 
+       get_url:
+         url: https://archive.cloudera.com/cdh5/redhat/7/x86_64/cdh/5.15.1/RPMS/x86_64
+         dest: /var/www/yum/cdh5/redhat/7/x86_64/cdh/5.15.1

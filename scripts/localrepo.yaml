@@ -1,0 +1,50 @@
+- hosts: repo
+  user: root
+  tasks:
+     - name: Install HTTPD service
+       yum:
+          name: httpd
+          state: installed
+     - name: Downloading ropo file
+       yum_repository:
+         name: cloudera-cdh
+         description: Cloudera cdh 5 YUM repo
+         baseurl: https://archive.cloudera.com/cdh5/redhat/7/x86_64/cdh/5.15.1
+     - name: Downloading ropo file
+       yum_repository:
+         name: cloudera-manager
+         description: Cloudera manager YUM repo
+         baseurl: http://archive.cloudera.com/cm5/redhat/7/x86_64/cm/5.15.1/
+         gpgkey: http://archive.cloudera.com/cm5/redhat/7/x86_64/cm/RPM-GPG-KEY-cloudera
+         gpgcheck: yes
+         async: yes
+     - name: creating cdh repo location
+       file: path=/var/www/yum/cdh5/redhat/7/x86_64/cdh/5.15.1 state=directory
+     - name:  Installing dep 
+       yum: 
+          name: yum-utils,createrepo
+          state: installed
+     - name: reposync 
+       shell: reposync -r cloudera-cdh
+       args:
+          chdir: /var/www/yum/
+       
+     - name: moving files  
+       shell: mv /var/www/yum/cloudera-cdh /var/www/yum/cdh5/redhat/7/x86_64/cdh/5.15.1
+     - name: creating repo
+       shell: createrepo .
+       args:
+           chdir: /var/www/yum/cdh5/redhat/7/x86_64/cdh/5.15.1
+     - name: creating cloudera manager repo location
+       file: path=/var/www/yum/cm5/redhat/7/x86_64/cm/5.15.1/ state=directory
+     - name: reposync cloudera manager
+       shell: reposync -r cloudera-manager
+       args:
+          chdir: /var/www/yum/
+
+     - name: moving files
+       shell: mv /var/www/yum/cm5 /var/www/yum/cm5/redhat/7/x86_64/cm/5.15.1/
+     - name: creating repo
+       shell: createrepo .
+       args:
+           chdir: /var/www/yum/cm5/redhat/7/x86_64/cm/5.15.1/
