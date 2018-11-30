@@ -5,6 +5,8 @@ CREATE DATABASE hue;
 CREATE DATABASE reportmanager;
 
 
+
+
 CREATE USER 'hive'@'%' IDENTIFIED BY 'Itv3rs1ty';
 CREATE USER 'oozie'@'%' IDENTIFIED BY 'Itv3rs1ty';
 CREATE USER 'hue'@'%' IDENTIFIED BY 'Itv3rs1ty';
