@@ -20,7 +20,7 @@
          async: yes
      - name: creating cdh repo location
        file: path=/var/www/yum/cdh5/redhat/7/x86_64/cdh/5.15.1 state=directory
-     - name:  Installing dep 
+     - name:  Installing dependencyes 
        yum: 
           name: yum-utils,createrepo
           state: installed
@@ -29,9 +29,9 @@
        args:
           chdir: /var/www/yum/
        
-     - name: moving files  
+     - name: moving files to repo destination
        shell: mv /var/www/yum/cloudera-cdh /var/www/yum/cdh5/redhat/7/x86_64/cdh/5.15.1
-     - name: creating repo
+     - name: creating repo meta data
        shell: createrepo .
        args:
            chdir: /var/www/yum/cdh5/redhat/7/x86_64/cdh/5.15.1
@@ -48,3 +48,5 @@
        shell: createrepo .
        args:
            chdir: /var/www/yum/cm5/redhat/7/x86_64/cm/5.15.1/
+     - name: Updating mirror in ropo file
+       
