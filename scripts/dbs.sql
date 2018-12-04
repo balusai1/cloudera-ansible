@@ -4,11 +4,11 @@ CREATE DATABASE oozie;
 CREATE DATABASE hue;
 CREATE DATABASE reportmanager;
 
-CREATE USER 'hive'@'%' IDENTIFIED BY 'Itv3rs1ty';
-CREATE USER 'oozie'@'%' IDENTIFIED BY 'Itv3rs1ty';
-CREATE USER 'hue'@'%' IDENTIFIED BY 'Itv3rs1ty';
-CREATE USER 'rm'@'%' IDENTIFIED BY 'Itv3rs1ty';
-CREATE USER 'scm'@'%' IDENTIFIED BY 'Itv3rs1ty';
+CREATE USER 'hive'@'%' IDENTIFIED BY 'itversity';
+CREATE USER 'oozie'@'%' IDENTIFIED BY 'itversity';
+CREATE USER 'hue'@'%' IDENTIFIED BY 'itversity';
+CREATE USER 'rm'@'%' IDENTIFIED BY 'itversity';
+CREATE USER 'scm'@'%' IDENTIFIED BY 'itversity';
 
 GRANT ALL PRIVILEGES ON scm.* TO 'scm'@'%';
 GRANT ALL PRIVILEGES ON hive.* TO 'hive'@'%';
